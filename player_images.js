@@ -33,7 +33,7 @@ const PLAYER_IMAGES = {
   "ヤン・ゾマー": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/FC_Salzburg_gegen_Inter_Mailand_%28Testspiel_2023-08-09%29_69.jpg/250px-FC_Salzburg_gegen_Inter_Mailand_%28Testspiel_2023-08-09%29_69.jpg",
   "ニック・ポープ": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Nick_Pope_23-04-2016_1.jpg/250px-Nick_Pope_23-04-2016_1.jpg",
   "マイク・メニャン": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Mike_Maignan_2022_Salzburg_vs_AC_Milan_2022-09-06.jpg/250px-Mike_Maignan_2022_Salzburg_vs_AC_Milan_2022-09-06.jpg",
-  "カラム・ウィルソン": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Callum_Wilson_2018.png/250px-Callum_Wilson_2018.png",
+  "カラム・ウィルソン": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Callum_Wilson_2023.png/250px-Callum_Wilson_2023.png",
 
   // === ★2 選手 ===
   "ジェイミー・ヴァーディ": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Jamie_Vardy_2018_%28cropped%29.jpg/250px-Jamie_Vardy_2018_%28cropped%29.jpg",
@@ -82,6 +82,7 @@ const PLAYER_IMAGES = {
   "マッティア・ペリン": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Mattia_Perin_2016.jpg/250px-Mattia_Perin_2016.jpg",
   "マシュー・ライアン": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Ryan_rcl_asse_2425.png/250px-Ryan_rcl_asse_2425.png",
   "ジョアン・マリオ": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Joao_Mario_2021.jpg/250px-Joao_Mario_2021.jpg",
+  "マッテオ・ポリターノ": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Napoli-Pisa_%283-2%29_22_September_2025.jpg/250px-Napoli-Pisa_%283-2%29_22_September_2025.jpg",
 
   // === ★1 選手 ===
   "デイビット・ミン": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/230624_%EC%88%98%EC%9B%90_%EC%82%BC%EC%84%B1_%EB%B8%94%EB%A3%A8%EC%9C%99%EC%A6%88_vs_FC_%EC%84%9C%EC%9A%B8_%28%ED%99%A9%EC%9D%98%EC%A1%B0%29.jpg/250px-230624_%EC%88%98%EC%9B%90_%EC%82%BC%EC%84%B1_%EB%B8%94%EB%A3%A8%EC%9C%99%EC%A6%88_vs_FC_%EC%84%9C%EC%9A%B8_%28%ED%99%A9%EC%9D%98%EC%A1%B0%29.jpg",
