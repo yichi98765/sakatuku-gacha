@@ -31,7 +31,7 @@ function doPull(count) {
   // Update state
   results.forEach(r => {
     state.totalPulls++;
-    state.medals = Math.min(state.medals + 1, 200);
+    state.medals = Math.min(state.medals + 1, 1000);
     const dupeKey = r.player.name;
     const prevDupes = state.dupes[dupeKey] || 0;
     state.dupes[dupeKey] = prevDupes + 1;

@@ -15,11 +15,18 @@ function getPlayerImageHtml(playerName, flag, size = "card") {
   const cfg = sizeConfig[size] || sizeConfig.card;
 
   if (size === "sim") {
-    // Simulator table uses inline img
     if (imgUrl) {
       return `<img src="${imgUrl}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;vertical-align:middle;" onerror="this.outerHTML='${flag}'">`;
     }
     return flag;
+  }
+
+  // ★3カード用: 背景画像として返す
+  if (size === "card-bg") {
+    if (imgUrl) {
+      return `<div class="card-bg-img"><img src="${imgUrl}" alt="${playerName}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`;
+    }
+    return "";
   }
 
   if (imgUrl) {
@@ -30,6 +37,10 @@ function getPlayerImageHtml(playerName, flag, size = "card") {
     return `<div class="${cfg.flagCls}">${flag}</div>`;
   }
   return `<div ${cfg.flagStyle}>${flag}</div>`;
+}
+
+function getPlayerImageUrl(playerName) {
+  return (typeof PLAYER_IMAGES !== 'undefined') ? PLAYER_IMAGES[playerName] : null;
 }
 
 // --- Format numbers ---

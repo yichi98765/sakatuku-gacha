@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>サカつく2026 ガチャシミュレーター</title>
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <!-- Background geometric patterns -->
@@ -45,7 +45,7 @@
         <span class="status-icon">🏅</span>
         <div class="status-text">
           <span class="status-label">メダル</span>
-          <span class="status-value"><span id="medal-count">0</span><span class="status-sub">/ 200</span></span>
+          <span class="status-value"><span id="medal-count">0</span><span class="status-sub">/ 1000</span></span>
         </div>
       </div>
       <div class="status-divider"></div>
@@ -117,7 +117,7 @@
       <!-- Medal Exchange -->
       <div class="medal-section">
         <button class="btn btn-exchange" id="btn-exchange" onclick="openExchange()">
-          🏅 メダル交換所 (<span id="medal-exchange-count">0</span>/200)
+          🏅 メダル交換所 (<span id="medal-exchange-count">0</span>/1000)
         </button>
         <button class="btn btn-reset" onclick="resetAll()">リセット</button>
       </div>
@@ -300,8 +300,8 @@
     <div class="overlay" id="exchange-overlay" style="display:none;">
       <div class="exchange-container">
         <h2>メダル交換所</h2>
-        <p class="exchange-info">メダル200枚で★3選手と交換できます</p>
-        <p class="exchange-medals">現在のメダル: <strong id="exchange-medal-display">0</strong> / 200</p>
+        <p class="exchange-info">メダル1000枚で★3選手と交換できます</p>
+        <p class="exchange-medals">現在のメダル: <strong id="exchange-medal-display">0</strong> / 1000</p>
         <div class="exchange-players" id="exchange-players"></div>
         <button class="btn btn-close" onclick="closeExchange()">閉じる</button>
       </div>
@@ -353,21 +353,21 @@
   </footer>
 
   <!-- Data -->
-  <script src="players.js?v=3"></script>
-  <script src="player_images.js?v=3"></script>
+  <script src="players.js?v=6"></script>
+  <script src="player_images.js?v=6"></script>
   <!-- Core -->
-  <script src="utils.js?v=3"></script>
-  <script src="state.js?v=3"></script>
-  <script src="sound.js?v=3"></script>
+  <script src="utils.js?v=6"></script>
+  <script src="state.js?v=6"></script>
+  <script src="sound.js?v=6"></script>
   <!-- UI & Features -->
-  <script src="ui.js?v=3"></script>
-  <script src="results.js?v=3"></script>
-  <script src="gacha.js?v=3"></script>
-  <script src="collection.js?v=3"></script>
-  <script src="exchange.js?v=3"></script>
-  <script src="history.js?v=3"></script>
-  <script src="simulator.js?v=3"></script>
+  <script src="ui.js?v=6"></script>
+  <script src="results.js?v=6"></script>
+  <script src="gacha.js?v=6"></script>
+  <script src="collection.js?v=6"></script>
+  <script src="exchange.js?v=6"></script>
+  <script src="history.js?v=6"></script>
+  <script src="simulator.js?v=6"></script>
   <!-- Entry Point -->
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>
