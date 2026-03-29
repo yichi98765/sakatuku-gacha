@@ -119,36 +119,17 @@ function createCard(result, index, hasStar3) {
     dupeHtml = renderDupeDisplay(result.dupeCount - 1, 2);
   }
 
-  if (result.rarity >= 2) {
-    // ★3, ★2: 画像をカード背景に全面表示
-    const bgHtml = getPlayerImageHtml(p.name, flag, "card-bg");
-    const smallImgHtml = bgHtml ? "" : getPlayerImageHtml(p.name, flag, "card");
-    card.innerHTML = `
-      <div class="card-inner">
-        <div class="card-front"></div>
-        <div class="card-back star${result.rarity}">
-          ${result.isNew ? '<div class="card-new">NEW</div>' : ''}
-          ${bgHtml}
-          <div class="card-info-overlay">
-            ${smallImgHtml}
-            <div class="card-stars">${starStr}</div>
-            <div class="card-position ${posGroup}">${p.position}</div>
-            <div class="card-name">${p.name}</div>
-            <div class="card-country">${p.country}</div>
-            ${dupeHtml}
-          </div>
-        </div>
-      </div>
-    `;
-  } else {
-    // ★1: 従来通り
-    const imgHtml = getPlayerImageHtml(p.name, flag, "card");
-    card.innerHTML = `
-      <div class="card-inner">
-        <div class="card-front"></div>
-        <div class="card-back star${result.rarity}">
-          ${result.isNew ? '<div class="card-new">NEW</div>' : ''}
-          ${imgHtml}
+  // 全レアリティ共通: 画像をカード背景に全面表示
+  const bgHtml = getPlayerImageHtml(p.name, flag, "card-bg");
+  const smallImgHtml = bgHtml ? "" : getPlayerImageHtml(p.name, flag, "card");
+  card.innerHTML = `
+    <div class="card-inner">
+      <div class="card-front"></div>
+      <div class="card-back star${result.rarity}">
+        ${result.isNew ? '<div class="card-new">NEW</div>' : ''}
+        ${bgHtml}
+        <div class="card-info-overlay">
+          ${smallImgHtml}
           <div class="card-stars">${starStr}</div>
           <div class="card-position ${posGroup}">${p.position}</div>
           <div class="card-name">${p.name}</div>
@@ -156,8 +137,8 @@ function createCard(result, index, hasStar3) {
           ${dupeHtml}
         </div>
       </div>
-    `;
-  }
+    </div>
+  `;
 
   card.addEventListener("click", () => {
     if (!card.classList.contains("flipped")) {
