@@ -7,11 +7,23 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Background geometric patterns -->
+  <div class="bg-pattern"></div>
+
   <div id="app">
     <!-- Header -->
     <header class="header">
-      <h1 class="title">サカつく2026</h1>
-      <p class="subtitle">ガチャシミュレーター</p>
+      <div class="header-logo">
+        <svg class="logo-shield" viewBox="0 0 40 44" width="36" height="40">
+          <path d="M20,2 L38,10 L38,26 Q38,38 20,42 Q2,38 2,26 L2,10 Z" fill="none" stroke="#00e5ff" stroke-width="2"/>
+          <path d="M20,8 L32,14 L32,26 Q32,34 20,38 Q8,34 8,26 L8,14 Z" fill="rgba(0,229,255,0.1)" stroke="rgba(0,229,255,0.3)" stroke-width="1"/>
+          <text x="20" y="28" text-anchor="middle" fill="#00e5ff" font-size="14" font-weight="900" font-family="sans-serif">S</text>
+        </svg>
+        <div class="header-text">
+          <h1 class="title">サカつく2026</h1>
+          <p class="subtitle">GACHA SIMULATOR</p>
+        </div>
+      </div>
       <div class="header-controls">
         <button class="icon-btn" id="btn-sound" onclick="toggleSound()" title="サウンドON/OFF">🔊</button>
         <button class="icon-btn" id="btn-theme" onclick="toggleTheme()" title="テーマ切替">🌙</button>
@@ -20,27 +32,55 @@
 
     <!-- Status Bar -->
     <div class="status-bar">
-      <div class="status-item">
-        <span class="status-label">GB</span>
-        <span class="status-value" id="gb-count">50000</span>
+      <div class="status-item gb-item">
+        <span class="status-icon">💎</span>
+        <div class="status-text">
+          <span class="status-label">GB</span>
+          <span class="status-value" id="gb-count">50000</span>
+        </div>
         <button class="charge-btn" onclick="openCharge()">+</button>
       </div>
+      <div class="status-divider"></div>
       <div class="status-item">
-        <span class="status-label">メダル</span>
-        <span class="status-value" id="medal-count">0</span>
-        <span class="status-sub">/ 200</span>
+        <span class="status-icon">🏅</span>
+        <div class="status-text">
+          <span class="status-label">メダル</span>
+          <span class="status-value"><span id="medal-count">0</span><span class="status-sub">/ 200</span></span>
+        </div>
       </div>
+      <div class="status-divider"></div>
       <div class="status-item">
-        <span class="status-label">総ガチャ回数</span>
-        <span class="status-value" id="total-pulls">0</span>
+        <span class="status-icon">🎯</span>
+        <div class="status-text">
+          <span class="status-label">スカウト</span>
+          <span class="status-value" id="total-pulls">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spent tracker -->
+    <div class="spent-bar">
+      <div class="spent-item">
+        <span class="spent-label">累計消費GB</span>
+        <span class="spent-value" id="total-gb-spent">0</span>
+      </div>
+      <div class="spent-item">
+        <span class="spent-label">課金換算</span>
+        <span class="spent-value spent-yen" id="yen-spent">¥0</span>
       </div>
     </div>
 
     <!-- Tab Navigation -->
     <div class="main-tabs">
-      <button class="main-tab active" data-page="gacha" onclick="switchPage('gacha')">ガチャ</button>
-      <button class="main-tab" data-page="collection" onclick="switchPage('collection')">図鑑</button>
-      <button class="main-tab" data-page="simulator" onclick="switchPage('simulator')">確率検証</button>
+      <button class="main-tab active" data-page="gacha" onclick="switchPage('gacha')">
+        <span class="tab-icon">⚽</span>スカウト
+      </button>
+      <button class="main-tab" data-page="collection" onclick="switchPage('collection')">
+        <span class="tab-icon">📖</span>図鑑
+      </button>
+      <button class="main-tab" data-page="simulator" onclick="switchPage('simulator')">
+        <span class="tab-icon">📊</span>確率検証
+      </button>
     </div>
 
     <!-- Gacha Page -->
@@ -49,6 +89,7 @@
       <div class="banner-section">
         <div class="banner-display">
           <div class="banner-card" id="banner-card">
+            <div class="banner-badge">SP SCOUT</div>
             <div class="banner-info">
               <h2 id="banner-title">SP選手スカウト</h2>
               <p id="banner-desc">★3 SP選手を獲得しよう！</p>
@@ -76,7 +117,7 @@
       <!-- Medal Exchange -->
       <div class="medal-section">
         <button class="btn btn-exchange" id="btn-exchange" onclick="openExchange()">
-          メダル交換所 (<span id="medal-exchange-count">0</span>/200)
+          🏅 メダル交換所 (<span id="medal-exchange-count">0</span>/200)
         </button>
         <button class="btn btn-reset" onclick="resetAll()">リセット</button>
       </div>
@@ -84,7 +125,7 @@
       <!-- History -->
       <div class="section-panel">
         <h3 class="section-title" onclick="toggleSection('history')">
-          ガチャ履歴 <span id="history-toggle">▼</span>
+          📋 ガチャ履歴 <span id="history-toggle">▼</span>
         </h3>
         <div class="section-content" id="history-content" style="display:none;">
           <div class="history-stats" id="history-stats"></div>
@@ -95,7 +136,7 @@
       <!-- Rates Detail -->
       <div class="section-panel">
         <h3 class="section-title" onclick="toggleSection('rates')">
-          提供割合 <span id="rates-toggle">▼</span>
+          📊 提供割合 <span id="rates-toggle">▼</span>
         </h3>
         <div class="section-content" id="rates-content" style="display:none;"></div>
       </div>
@@ -128,18 +169,33 @@
       </div>
       <div class="sim-controls">
         <input type="hidden" id="sim-banner" value="normal">
-        <div class="sim-row">
-          <label>回数:</label>
-          <div class="sim-presets">
-            <button class="sim-preset" onclick="runSimulation(100)">100連</button>
-            <button class="sim-preset" onclick="runSimulation(1000)">1,000連</button>
-            <button class="sim-preset" onclick="runSimulation(10000)">10,000連</button>
-            <button class="sim-preset" onclick="runSimulation(100000)">100,000連</button>
-          </div>
+        <div class="sim-section-label">プリセット回数</div>
+        <div class="sim-preset-grid">
+          <button class="sim-preset-card" onclick="runSimulation(100)">
+            <span class="sim-preset-num">100</span>
+            <span class="sim-preset-unit">連</span>
+            <span class="sim-preset-cost">30,000 GB</span>
+          </button>
+          <button class="sim-preset-card" onclick="runSimulation(1000)">
+            <span class="sim-preset-num">1,000</span>
+            <span class="sim-preset-unit">連</span>
+            <span class="sim-preset-cost">300,000 GB</span>
+          </button>
+          <button class="sim-preset-card featured" onclick="runSimulation(10000)">
+            <span class="sim-preset-num">10,000</span>
+            <span class="sim-preset-unit">連</span>
+            <span class="sim-preset-cost">3,000,000 GB</span>
+          </button>
+          <button class="sim-preset-card" onclick="runSimulation(100000)">
+            <span class="sim-preset-num">100,000</span>
+            <span class="sim-preset-unit">連</span>
+            <span class="sim-preset-cost">30,000,000 GB</span>
+          </button>
         </div>
-        <div class="sim-row">
-          <label>カスタム:</label>
-          <input type="number" id="sim-custom-count" value="5000" min="1" max="1000000">
+        <div class="sim-section-label" style="margin-top:12px;">カスタム回数</div>
+        <div class="sim-custom-row">
+          <input type="number" id="sim-custom-count" value="5000" min="1" max="1000000" placeholder="回数を入力">
+          <span class="sim-custom-unit">連</span>
           <button class="btn btn-sim-run" onclick="runSimulation(parseInt(document.getElementById('sim-custom-count').value))">実行</button>
         </div>
       </div>
@@ -153,20 +209,89 @@
 
     <!-- Result Overlay -->
     <div class="overlay" id="overlay" style="display:none;">
-      <!-- Star3 door animation -->
-      <div class="door-animation" id="door-animation" style="display:none;">
-        <div class="door-left"></div>
-        <div class="door-right"></div>
-        <div class="door-light"></div>
+      <!-- Star3 manager corridor animation -->
+      <div class="star3-cinematic" id="star3-cinematic" style="display:none;">
+        <!-- Corridor scene -->
+        <div class="corridor-scene">
+          <div class="corridor-floor"></div>
+          <div class="corridor-ceiling"></div>
+          <div class="corridor-wall-left">
+            <div class="led-strip"></div>
+            <div class="led-strip s2"></div>
+            <div class="led-strip s3"></div>
+          </div>
+          <div class="corridor-wall-right">
+            <div class="led-strip"></div>
+            <div class="led-strip s2"></div>
+            <div class="led-strip s3"></div>
+          </div>
+          <!-- Bench -->
+          <div class="bench-obj"></div>
+          <!-- Manager silhouette -->
+          <div class="manager-figure" id="manager-figure">
+            <svg viewBox="0 0 100 200" class="manager-svg">
+              <circle cx="50" cy="22" r="16" fill="#1a1a2e"/>
+              <path d="M30,38 L25,100 L75,100 L70,38 Q50,32 30,38Z" fill="#2a2a3e"/>
+              <path d="M42,38 L50,60 L58,38" fill="none" stroke="#3a3a5e" stroke-width="1.5"/>
+              <path d="M50,42 L47,70 L50,75 L53,70 L50,42Z" fill="#445"/>
+              <path d="M25,45 L15,85 L20,86 L30,50Z" fill="#2a2a3e"/>
+              <path d="M75,45 L85,85 L80,86 L70,50Z" fill="#2a2a3e"/>
+              <ellipse cx="15" cy="88" rx="5" ry="4" fill="#c4956a"/>
+              <ellipse cx="85" cy="88" rx="5" ry="4" fill="#c4956a"/>
+              <path d="M28,98 L22,170 L38,170 L50,115 L62,170 L78,170 L72,98Z" fill="#1e1e2e"/>
+              <rect x="18" y="168" width="24" height="8" rx="4" fill="#111"/>
+              <rect x="58" y="168" width="24" height="8" rx="4" fill="#111"/>
+              <ellipse cx="28" cy="40" rx="8" ry="5" fill="#2a2a3e"/>
+              <ellipse cx="72" cy="40" rx="8" ry="5" fill="#2a2a3e"/>
+            </svg>
+          </div>
+          <!-- Trophy at end of corridor -->
+          <div class="trophy-area" id="trophy-area">
+            <div class="trophy-glow"></div>
+            <div class="trophy-pedestal">
+              <svg viewBox="0 0 80 120" class="trophy-svg">
+                <rect x="15" y="70" width="50" height="50" rx="3" fill="url(#pedestalGrad)"/>
+                <defs>
+                  <linearGradient id="pedestalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#4a3abd"/>
+                    <stop offset="50%" style="stop-color:#6b4ce6"/>
+                    <stop offset="100%" style="stop-color:#4a3abd"/>
+                  </linearGradient>
+                  <linearGradient id="trophyRainbow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ff3366">
+                      <animate attributeName="stop-color" values="#ff3366;#ffd700;#33ff99;#3399ff;#ff33ff;#ff3366" dur="3s" repeatCount="indefinite"/>
+                    </stop>
+                    <stop offset="50%" style="stop-color:#ffd700">
+                      <animate attributeName="stop-color" values="#ffd700;#33ff99;#3399ff;#ff33ff;#ff3366;#ffd700" dur="3s" repeatCount="indefinite"/>
+                    </stop>
+                    <stop offset="100%" style="stop-color:#33ff99">
+                      <animate attributeName="stop-color" values="#33ff99;#3399ff;#ff33ff;#ff3366;#ffd700;#33ff99" dur="3s" repeatCount="indefinite"/>
+                    </stop>
+                  </linearGradient>
+                </defs>
+                <path d="M25,68 L28,45 Q28,30 40,25 Q52,30 52,45 L55,68Z" fill="url(#trophyRainbow)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+                <path d="M28,40 Q15,40 15,52 Q15,60 25,60" fill="none" stroke="url(#trophyRainbow)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M52,40 Q65,40 65,52 Q65,60 55,60" fill="none" stroke="url(#trophyRainbow)" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="40" cy="22" r="5" fill="url(#trophyRainbow)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+                <rect x="30" y="65" width="20" height="5" rx="2" fill="url(#trophyRainbow)"/>
+                <rect x="20" y="72" width="8" height="45" rx="2" fill="rgba(255,255,255,0.08)"/>
+              </svg>
+            </div>
+          </div>
+          <div class="trophy-rays"></div>
+        </div>
+        <div class="cinematic-text">★★★</div>
       </div>
       <div class="result-container" id="result-container">
         <div class="result-header">
           <h2 id="result-title">スカウト結果</h2>
-          <button class="btn btn-skip" id="btn-skip" onclick="skipAnimation()">スキップ</button>
+          <div class="result-header-btns">
+            <button class="btn btn-skip" id="btn-skip" onclick="skipAnimation()">スキップ</button>
+            <button class="btn btn-close" id="btn-close-result" onclick="closeResult()" style="display:none;">閉じる</button>
+          </div>
         </div>
-        <div class="cards-container" id="cards-container"></div>
-        <div class="result-buttons">
-          <button class="btn btn-close" id="btn-close-result" onclick="closeResult()" style="display:none;">閉じる</button>
+        <div class="cards-wrapper">
+          <div class="cards-container" id="cards-container"></div>
         </div>
       </div>
     </div>
@@ -205,7 +330,27 @@
     <div class="overlay" id="player-detail-overlay" style="display:none;">
       <div class="player-detail-container" id="player-detail-container"></div>
     </div>
+
+    <!-- Confirm Modal -->
+    <div class="overlay" id="confirm-overlay" style="display:none;">
+      <div class="confirm-modal">
+        <div class="confirm-icon" id="confirm-icon">📊</div>
+        <h3 class="confirm-title" id="confirm-title"></h3>
+        <div class="confirm-body" id="confirm-body"></div>
+        <div class="confirm-buttons">
+          <button class="btn confirm-btn-cancel" id="confirm-cancel">キャンセル</button>
+          <button class="btn confirm-btn-ok" id="confirm-ok">実行</button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Disclaimer Footer -->
+  <footer class="disclaimer-footer">
+    <p>本サイトは個人が作成した非公式のファンメイドツールです。</p>
+    <p>「プロサッカークラブをつくろう！2026」（サカつく2026）の開発元・発売元であるセガ様、およびFootball Manager等の関連企業とは一切関係ありません。</p>
+    <p>ゲーム内データの引用は検証・シミュレーション目的であり、著作権・商標権はそれぞれの権利者に帰属します。</p>
+  </footer>
 
   <script src="players.js"></script>
   <script src="player_images.js"></script>

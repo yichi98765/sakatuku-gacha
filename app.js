@@ -9,7 +9,7 @@ const GACHA_CONFIG = {
   }
 };
 
-const MAX_DUPE = 5; // 最大凸数
+const MAX_DUPE = 6; // 最大凸数（凸1〜凸6）
 
 // === State ===
 let state = {
@@ -17,6 +17,7 @@ let state = {
   gb: 50000,
   medals: 0,
   totalPulls: 0,
+  totalGBSpent: 0,
   history: [],       // { rarity, player, isNew, pullNum }
   dupes: {},         // { playerName: count }
   stats: { star3: 0, star2: 0, star1: 0 },
@@ -48,6 +49,7 @@ function saveState() {
     gb: state.gb,
     medals: state.medals,
     totalPulls: state.totalPulls,
+    totalGBSpent: state.totalGBSpent,
     history: state.history.slice(0, 500), // keep last 500
     dupes: state.dupes,
     stats: state.stats,
@@ -151,6 +153,7 @@ function doPull(count) {
   }
 
   state.gb -= cost;
+  state.totalGBSpent += cost;
   isAnimating = true;
 
   const config = GACHA_CONFIG[state.banner];
@@ -214,7 +217,7 @@ function showResults(results) {
   const container = document.getElementById("cards-container");
   const resultContainer = document.getElementById("result-container");
   const hasStar3 = results.some(r => r.rarity === 3);
-  const doorAnim = document.getElementById("door-animation");
+  const cinematic = document.getElementById("star3-cinematic");
 
   document.getElementById("result-title").textContent =
     results.length === 1 ? "スカウト結果" : "10連スカウト結果";
@@ -226,26 +229,38 @@ function showResults(results) {
   document.getElementById("btn-skip").style.display = "inline-block";
   document.getElementById("btn-close-result").style.display = "none";
 
-  // Door animation for ★3
+  // Manager corridor animation for ★3
   if (hasStar3) {
-    doorAnim.style.display = "block";
-    doorAnim.classList.remove("open");
-    overlay.style.display = "flex";
+    cinematic.style.display = "block";
+    cinematic.classList.remove("fade-out");
+    // Reset all animations
+    const animEls = cinematic.querySelectorAll(".manager-figure, .trophy-area, .trophy-glow, .trophy-rays, .cinematic-text, .led-strip, .bench-obj, .corridor-scene");
+    animEls.forEach(el => { el.style.animation = "none"; el.offsetHeight; el.style.animation = ""; });
+    // Also reset child animations
+    const managerSvg = cinematic.querySelector(".manager-figure");
+    if (managerSvg) { managerSvg.style.animation = "none"; managerSvg.offsetHeight; managerSvg.style.animation = ""; }
 
+    overlay.style.display = "flex";
     soundManager.star3Flash();
 
-    setTimeout(() => {
-      doorAnim.classList.add("open");
+    const t1 = setTimeout(() => {
       soundManager.star3Reveal();
-    }, 500);
+    }, 1200);
+    animationTimeouts.push(t1);
 
-    setTimeout(() => {
-      doorAnim.style.display = "none";
+    const t2 = setTimeout(() => {
+      cinematic.classList.add("fade-out");
+    }, 3000);
+    animationTimeouts.push(t2);
+
+    const t3 = setTimeout(() => {
+      cinematic.style.display = "none";
       showStar3Effect();
       buildCards(results, container, hasStar3);
-    }, 1600);
+    }, 3500);
+    animationTimeouts.push(t3);
   } else {
-    doorAnim.style.display = "none";
+    cinematic.style.display = "none";
     overlay.style.display = "flex";
     buildCards(results, container, hasStar3);
   }
@@ -286,6 +301,30 @@ function buildCards(results, container, hasStar3) {
   animationTimeouts.push(closeT);
 }
 
+// 凸/重複表示
+// ★3: ドット形式(凸1〜凸6 Max)  ★2: ×N回  ★1: 表示なし
+function renderDupeDisplay(dupeCount, rarity, size = "sm") {
+  if (dupeCount <= 0) return "";
+  if (rarity === 3) {
+    const level = Math.min(dupeCount, MAX_DUPE);
+    const isMax = level >= MAX_DUPE;
+    const cls = size === "lg" ? "dupe-dots lg" : "dupe-dots";
+    let dots = `<div class="${cls}${isMax ? ' max' : ''}">`;
+    for (let i = 1; i <= MAX_DUPE; i++) {
+      dots += `<span class="dupe-dot${i <= level ? ' filled' : ''}"></span>`;
+    }
+    dots += `<span class="dupe-label">${isMax ? '凸MAX' : '凸' + level}</span>`;
+    dots += `</div>`;
+    return dots;
+  } else if (rarity === 2) {
+    const totalCount = dupeCount + 1; // dupeCount is dupes, +1 for the original
+    const cls = size === "lg" ? "dupe-text lg" : "dupe-text";
+    return `<div class="${cls}">\u00D7${totalCount}回</div>`;
+  }
+  // ★1: 表示なし
+  return "";
+}
+
 function createCard(result, index, hasStar3) {
   const card = document.createElement("div");
   card.className = "card";
@@ -295,14 +334,18 @@ function createCard(result, index, hasStar3) {
   const p = result.player;
   const flag = getFlag(p.country);
   const posGroup = getPosGroup(p.position);
-  const dupeText = result.dupeCount > 1
-    ? `\u{51F8}${Math.min(result.dupeCount - 1, MAX_DUPE)}/${MAX_DUPE}`
-    : "";
 
   const imgUrl = (typeof PLAYER_IMAGES !== 'undefined') ? PLAYER_IMAGES[p.name] : null;
   const imgHtml = imgUrl
     ? `<div class="card-img"><img src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='${flag}'"></div>`
     : `<div class="card-flag">${flag}</div>`;
+
+  let dupeHtml = "";
+  if (result.rarity === 3 && result.dupeCount > 1) {
+    dupeHtml = renderDupeDisplay(result.dupeCount - 1, 3);
+  } else if (result.rarity === 2 && result.dupeCount > 1) {
+    dupeHtml = renderDupeDisplay(result.dupeCount - 1, 2);
+  }
 
   card.innerHTML = `
     <div class="card-inner">
@@ -314,7 +357,7 @@ function createCard(result, index, hasStar3) {
         <div class="card-position ${posGroup}">${p.position}</div>
         <div class="card-name">${p.name}</div>
         <div class="card-country">${p.country}</div>
-        ${dupeText ? `<div class="card-dupe">${dupeText}</div>` : ''}
+        ${dupeHtml}
       </div>
     </div>
   `;
@@ -339,7 +382,8 @@ function skipAnimation() {
 
   document.getElementById("btn-skip").style.display = "none";
   document.getElementById("btn-close-result").style.display = "inline-block";
-  document.getElementById("door-animation").style.display = "none";
+  const cinematicEl = document.getElementById("star3-cinematic");
+  if (cinematicEl) cinematicEl.style.display = "none";
   isAnimating = false;
 }
 
@@ -446,6 +490,7 @@ function resetAll() {
     gb: 50000,
     medals: 0,
     totalPulls: 0,
+    totalGBSpent: 0,
     history: [],
     dupes: {},
     stats: { star3: 0, star2: 0, star1: 0 },
@@ -464,6 +509,10 @@ function updateUI() {
   document.getElementById("medal-count").textContent = state.medals;
   document.getElementById("medal-exchange-count").textContent = state.medals;
   document.getElementById("total-pulls").textContent = state.totalPulls;
+  document.getElementById("total-gb-spent").textContent = state.totalGBSpent.toLocaleString();
+  // Update yen equivalent
+  const yenSpent = Math.ceil(state.totalGBSpent / 1.1);
+  document.getElementById("yen-spent").textContent = "¥" + yenSpent.toLocaleString();
 
   // Disable buttons if not enough GB
   const singleBtn = document.getElementById("btn-single");
@@ -620,12 +669,19 @@ function renderCollection() {
     const dupeCount = state.dupes[p.name] || 0;
     const flag = getFlag(p.country);
     const starStr = "\u2605".repeat(p.rarity);
-    const dupeText = dupeCount > 1 ? `\u51F8${Math.min(dupeCount - 1, MAX_DUPE)}` : "";
+    const dupeLevel = dupeCount > 1 ? dupeCount - 1 : 0;
 
     const imgUrl = (typeof PLAYER_IMAGES !== 'undefined') ? PLAYER_IMAGES[p.name] : null;
     const imgHtml = imgUrl
       ? `<div class="col-img"><img src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='${flag}'"></div>`
       : `<div class="col-flag">${flag}</div>`;
+
+    let colDupeHtml = "";
+    if (owned && p.rarity === 3 && dupeLevel > 0) {
+      colDupeHtml = renderDupeDisplay(dupeLevel, 3);
+    } else if (owned && p.rarity === 2 && dupeCount > 1) {
+      colDupeHtml = renderDupeDisplay(dupeLevel, 2);
+    }
 
     return `
       <div class="collection-card ${owned ? 'owned' : 'unowned'} star${p.rarity}"
@@ -634,7 +690,7 @@ function renderCollection() {
         <div class="col-stars">${starStr}</div>
         <div class="col-name">${p.name}</div>
         <span class="col-pos ${getPosGroup(p.position)}">${p.position}</span>
-        ${dupeText ? `<div class="col-dupe">${dupeText}</div>` : ''}
+        ${colDupeHtml}
       </div>`;
   }).join("");
 }
@@ -648,7 +704,7 @@ function showPlayerDetail(name, rarity) {
   if (!owned) return; // Can't view unowned
 
   const dupeCount = state.dupes[player.name] || 0;
-  const dupeLevel = Math.min(dupeCount - 1, MAX_DUPE);
+  const dupeLevel = dupeCount > 1 ? dupeCount - 1 : 0;
   const flag = getFlag(player.country);
   const starStr = "\u2605".repeat(player.rarity);
 
@@ -659,6 +715,31 @@ function showPlayerDetail(name, rarity) {
     ? `<div class="pd-img"><img src="${imgUrl}" alt="${player.name}" onerror="this.parentElement.innerHTML='${flag}'"></div>`
     : `<div class="pd-flag">${flag}</div>`;
 
+  let dupeDetailHtml = "";
+  if (player.rarity === 3) {
+    // ★3: 凸ドット＋プログレスバー
+    const cappedLevel = Math.min(dupeLevel, MAX_DUPE);
+    const isMax = cappedLevel >= MAX_DUPE;
+    dupeDetailHtml = `
+      <div class="pd-dupe-info">
+        <span class="pd-dupe-count">取得回数: ${dupeCount}</span>
+        <span class="pd-dupe-level ${isMax ? 'max' : ''}">
+          ${isMax ? '凸MAX' : dupeLevel > 0 ? '凸' + dupeLevel : '凸なし'}
+        </span>
+      </div>
+      ${renderDupeDisplay(dupeLevel, 3, "lg")}
+      <div class="pd-dupe-bar">
+        <div class="pd-dupe-fill" style="width:${(cappedLevel / MAX_DUPE) * 100}%"></div>
+      </div>`;
+  } else if (player.rarity === 2) {
+    // ★2: 取得回数のみ
+    dupeDetailHtml = `
+      <div class="pd-dupe-info">
+        <span class="pd-dupe-count">取得回数: ${dupeCount}</span>
+      </div>`;
+  }
+  // ★1: 凸情報なし
+
   const container = document.getElementById("player-detail-container");
   container.innerHTML = `
     ${imgHtml}
@@ -667,10 +748,7 @@ function showPlayerDetail(name, rarity) {
     <div class="pd-country">${player.country}</div>
     <div class="pd-pos ${posGroup}">${player.position}</div>
     <div class="pd-rate">排出率: ${player.rate}%</div>
-    <div class="pd-dupe">取得回数: ${dupeCount} / 凸レベル: ${dupeLevel}/${MAX_DUPE}</div>
-    <div class="pd-dupe-bar">
-      <div class="pd-dupe-fill" style="width:${(dupeLevel / MAX_DUPE) * 100}%"></div>
-    </div>
+    ${dupeDetailHtml}
     <button class="btn btn-close" onclick="closePlayerDetail()">閉じる</button>
   `;
 
@@ -681,12 +759,62 @@ function closePlayerDetail() {
   document.getElementById("player-detail-overlay").style.display = "none";
 }
 
+// === Custom Confirm Modal ===
+function showConfirm(title, bodyHtml, icon = "📊") {
+  return new Promise((resolve) => {
+    const overlay = document.getElementById("confirm-overlay");
+    document.getElementById("confirm-icon").textContent = icon;
+    document.getElementById("confirm-title").textContent = title;
+    document.getElementById("confirm-body").innerHTML = bodyHtml;
+    overlay.style.display = "flex";
+
+    const okBtn = document.getElementById("confirm-ok");
+    const cancelBtn = document.getElementById("confirm-cancel");
+
+    function cleanup() {
+      overlay.style.display = "none";
+      okBtn.removeEventListener("click", onOk);
+      cancelBtn.removeEventListener("click", onCancel);
+    }
+    function onOk() { cleanup(); resolve(true); }
+    function onCancel() { cleanup(); resolve(false); }
+
+    okBtn.addEventListener("click", onOk);
+    cancelBtn.addEventListener("click", onCancel);
+  });
+}
+
 // === Simulator (確率検証) ===
-function runSimulation(count) {
+async function runSimulation(count) {
   if (count < 1 || count > 1000000 || isNaN(count)) {
-    alert("1〜1,000,000の範囲で入力してください");
+    alert("1\u301C1,000,000の範囲で入力してください");
     return;
   }
+
+  const gbCost = (count * 300).toLocaleString();
+  const yenCost = "\u00A5" + Math.ceil((count * 300) / 1.1).toLocaleString();
+
+  const bodyHtml = `
+    <div class="confirm-detail">
+      <span class="confirm-detail-label">シミュレーション回数</span>
+      <span class="confirm-detail-value accent">${count.toLocaleString()}連</span>
+    </div>
+    <div class="confirm-detail">
+      <span class="confirm-detail-label">消費GB換算</span>
+      <span class="confirm-detail-value">${gbCost} GB</span>
+    </div>
+    <div class="confirm-detail">
+      <span class="confirm-detail-label">課金換算</span>
+      <span class="confirm-detail-value yen">${yenCost}</span>
+    </div>
+  `;
+
+  const confirmed = await showConfirm(
+    `${count.toLocaleString()}連 シミュレーション`,
+    bodyHtml,
+    "🎰"
+  );
+  if (!confirmed) return;
 
   soundManager.init();
   soundManager.click();
