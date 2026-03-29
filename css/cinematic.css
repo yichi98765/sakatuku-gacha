@@ -1,0 +1,233 @@
+/* === Star3 Manager Corridor Animation === */
+.star3-cinematic {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1001; pointer-events: none;
+  overflow: hidden; background: #0a0a12;
+}
+
+.corridor-scene {
+  position: absolute; width: 100%; height: 100%;
+  perspective: 600px;
+  overflow: hidden;
+}
+
+/* Floor with tile pattern */
+.corridor-floor {
+  position: absolute; bottom: 0; left: -20%; width: 140%; height: 50%;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 40px),
+    linear-gradient(180deg, #1a1a2e 0%, #12121e 100%);
+  transform: perspective(400px) rotateX(35deg);
+  transform-origin: bottom center;
+}
+
+/* Ceiling */
+.corridor-ceiling {
+  position: absolute; top: 0; left: -20%; width: 140%; height: 30%;
+  background: linear-gradient(180deg, #0d0d18 0%, #151525 100%);
+  transform: perspective(400px) rotateX(-15deg);
+  transform-origin: top center;
+}
+
+/* Walls */
+.corridor-wall-left {
+  position: absolute; left: 0; top: 0; width: 18%; height: 100%;
+  background: linear-gradient(90deg, #1a1a30 0%, #10101e 100%);
+}
+.corridor-wall-right {
+  position: absolute; right: 0; top: 0; width: 18%; height: 100%;
+  background: linear-gradient(-90deg, #1a1a30 0%, #10101e 100%);
+}
+
+/* LED light strips on walls */
+.led-strip {
+  position: absolute; width: 3px; height: 60%;
+  top: 15%; right: 8px;
+  background: linear-gradient(180deg, transparent 0%, #00e5ff 20%, #00e5ff 80%, transparent 100%);
+  box-shadow: 0 0 15px 4px rgba(0, 229, 255, 0.4), 0 0 40px 8px rgba(0, 229, 255, 0.15);
+  opacity: 0;
+  animation: ledFlicker 0.3s ease-out forwards;
+}
+.corridor-wall-left .led-strip { right: 8px; }
+.corridor-wall-right .led-strip { left: 8px; right: auto; }
+
+.led-strip.s2 { right: 20px; animation-delay: 0.15s; height: 45%; top: 25%; opacity: 0; }
+.led-strip.s3 { right: 35px; animation-delay: 0.3s; height: 30%; top: 35%; opacity: 0; }
+.corridor-wall-right .led-strip.s2 { left: 20px; right: auto; }
+.corridor-wall-right .led-strip.s3 { left: 35px; right: auto; }
+
+@keyframes ledFlicker {
+  0% { opacity: 0; }
+  40% { opacity: 0.8; }
+  60% { opacity: 0.4; }
+  100% { opacity: 0.9; }
+}
+
+/* Bench */
+.bench-obj {
+  position: absolute; bottom: 38%; left: 25%;
+  width: 80px; height: 20px;
+  background: linear-gradient(180deg, #3a3a50 0%, #2a2a40 100%);
+  border-radius: 3px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  animation: benchFade 0.5s ease-out 1.2s forwards;
+  opacity: 0.7;
+}
+.bench-obj::after {
+  content: '';
+  position: absolute; bottom: -12px; left: 5px;
+  width: 8px; height: 12px; background: #2a2a40;
+  box-shadow: 60px 0 0 #2a2a40;
+}
+
+@keyframes benchFade {
+  to { opacity: 0.3; }
+}
+
+/* Manager figure */
+.manager-figure {
+  position: absolute; bottom: 22%; left: 50%;
+  width: 80px; height: 160px;
+  transform: translateX(-50%);
+  z-index: 5;
+  animation: managerStandAndWalk 2.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.manager-svg {
+  width: 100%; height: 100%;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.8));
+}
+
+@keyframes managerStandAndWalk {
+  0% {
+    transform: translateX(-50%) translateY(30px) scaleY(0.7) scaleX(1.1);
+    opacity: 0.9;
+    left: 30%;
+  }
+  25% {
+    transform: translateX(-50%) translateY(0px) scaleY(1) scaleX(1);
+    opacity: 1;
+    left: 30%;
+  }
+  40% {
+    transform: translateX(-50%) translateY(0px) scaleY(1) scaleX(1);
+    opacity: 1;
+    left: 35%;
+  }
+  80% {
+    transform: translateX(-50%) translateY(-10px) scaleY(0.65) scaleX(0.65);
+    opacity: 0.8;
+    left: 48%;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-15px) scaleY(0.5) scaleX(0.5);
+    opacity: 0.6;
+    left: 50%;
+  }
+}
+
+/* Walking sway effect */
+.manager-figure .manager-svg {
+  animation: walkSway 0.5s ease-in-out 0.8s infinite;
+}
+
+@keyframes walkSway {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1.5deg); }
+  75% { transform: rotate(-1.5deg); }
+}
+
+/* Trophy area */
+.trophy-area {
+  position: absolute; top: 25%; left: 50%;
+  transform: translateX(-50%);
+  width: 100px; height: 150px;
+  z-index: 3;
+  opacity: 0;
+  animation: trophyReveal 1.2s ease-out 1s forwards;
+}
+
+@keyframes trophyReveal {
+  0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+  50% { opacity: 0.6; transform: translateX(-50%) scale(0.9); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+.trophy-pedestal { position: relative; z-index: 2; }
+.trophy-svg { width: 100%; height: 100%; }
+
+/* Trophy rainbow glow */
+.trophy-glow {
+  position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+  width: 160px; height: 160px; border-radius: 50%;
+  background: conic-gradient(#ff3366, #ff9933, #ffff33, #33ff66, #3399ff, #cc33ff, #ff3366);
+  opacity: 0;
+  filter: blur(30px);
+  animation: trophyGlowPulse 2s ease-in-out 1.5s infinite;
+}
+
+@keyframes trophyGlowPulse {
+  0%, 100% { opacity: 0.25; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.5; transform: translateX(-50%) scale(1.2); }
+}
+
+/* Light rays from trophy */
+.trophy-rays {
+  position: absolute; top: 20%; left: 50%;
+  width: 0; height: 0; z-index: 2;
+  opacity: 0;
+  animation: raysAppear 1s ease-out 1.8s forwards;
+}
+.trophy-rays::before, .trophy-rays::after {
+  content: '';
+  position: absolute;
+  top: -100px; left: -2px;
+  width: 4px; height: 250px;
+  background: linear-gradient(180deg, rgba(255,215,0,0.6) 0%, transparent 100%);
+  transform-origin: bottom center;
+}
+.trophy-rays::before { transform: rotate(-20deg); }
+.trophy-rays::after { transform: rotate(20deg); }
+
+@keyframes raysAppear {
+  0% { opacity: 0; }
+  100% { opacity: 0.6; }
+}
+
+/* Cinematic text overlay */
+.cinematic-text {
+  position: absolute; z-index: 10;
+  top: 12%; left: 50%; transform: translateX(-50%);
+  font-size: 44px; font-weight: 900;
+  color: transparent;
+  background: linear-gradient(135deg, var(--star3-color), #fff, var(--star3-color));
+  -webkit-background-clip: text; background-clip: text;
+  opacity: 0;
+  animation: cinematicTextAppear 0.8s ease-out 2s forwards;
+  filter: drop-shadow(0 0 15px rgba(255,215,0,0.8));
+}
+
+@keyframes cinematicTextAppear {
+  0% { opacity: 0; transform: translateX(-50%) scale(2.5); }
+  60% { opacity: 1; transform: translateX(-50%) scale(0.95); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+/* Ambient light sweep effect */
+.corridor-scene::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,229,255,0.05), transparent);
+  animation: ambientSweep 2s ease-in-out 0.5s forwards;
+  z-index: 4;
+}
+
+@keyframes ambientSweep {
+  0% { left: -100%; }
+  100% { left: 150%; }
+}
+
+.star3-cinematic.fade-out {
+  animation: fadeOut 0.5s ease-out forwards;
+}

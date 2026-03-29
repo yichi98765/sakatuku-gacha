@@ -1,0 +1,76 @@
+/* === Reset & Base === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+  position: relative;
+}
+
+/* Background geometric pattern */
+.bg-pattern {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(circle at 15% 20%, var(--accent-glow) 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(0, 229, 255, 0.05) 0%, transparent 40%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 60px,
+      rgba(0, 229, 255, 0.015) 60px,
+      rgba(0, 229, 255, 0.015) 61px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 60px,
+      rgba(0, 229, 255, 0.015) 60px,
+      rgba(0, 229, 255, 0.015) 61px
+    );
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  padding-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Star color utility classes */
+.color-star3 { color: var(--star3-color); }
+.color-star2 { color: var(--star2-color); }
+.color-star1 { color: var(--star1-color); }
+
+/* === Scrollbar === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+
+/* === Animations === */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { to { opacity: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.page { animation: fadeIn 0.3s ease; }
+
+/* === Responsive PC layout === */
+@media (min-width: 768px) {
+  #app { max-width: 720px; }
+  .cards-container { gap: 14px; }
+  .card { width: 140px; height: 195px; }
+  .collection-grid { grid-template-columns: repeat(5, 1fr) !important; }
+}
+
+@media (min-width: 1024px) {
+  #app { max-width: 960px; }
+  .pull-buttons { max-width: 500px; margin-left: auto; margin-right: auto; }
+  .collection-grid { grid-template-columns: repeat(6, 1fr) !important; }
+  .sim-controls { max-width: 600px; }
+}

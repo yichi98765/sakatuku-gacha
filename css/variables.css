@@ -1,0 +1,58 @@
+/* === Theme Variables — サカつく2026 Style === */
+
+:root {
+  /* Star color tokens */
+  --star3-color: #ffd700;
+  --star2-color: #aaaadd;
+  --star1-color: #8888aa;
+  --star3-glow: rgba(255, 215, 0, 0.6);
+  --star2-glow: rgba(170, 170, 221, 0.4);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0a1628;
+  --bg-secondary: #0d1f35;
+  --bg-tertiary: #081220;
+  --accent: #00e5ff;
+  --accent2: #00bcd4;
+  --accent-glow: rgba(0, 229, 255, 0.15);
+  --bg-panel: rgba(0, 229, 255, 0.06);
+  --bg-panel-hover: rgba(0, 229, 255, 0.12);
+  --text-primary: #e8f4f8;
+  --text-secondary: #8aa4b8;
+  --text-muted: #5a7a90;
+  --border-color: rgba(0, 229, 255, 0.12);
+  --card-front-bg1: #0f2840;
+  --card-front-bg2: #163550;
+  --card-front-border: #1a4060;
+  --overlay-bg: rgba(5, 12, 25, 0.95);
+  --panel-bg: rgba(0, 229, 255, 0.04);
+  --star1-bg1: #1a2a3e; --star1-bg2: #243648; --star1-border: #3a5068;
+  --star2-bg1: #1a2a5e; --star2-bg2: #3040a0; --star2-border: #5a6aee;
+  --banner-bg1: #0a1830; --banner-bg2: #0f2545;
+  --exchange-bg1: #0a1830; --exchange-bg2: #0f2545;
+}
+
+[data-theme="light"] {
+  --bg-primary: #e4eff7;
+  --bg-secondary: #d0e2ef;
+  --bg-tertiary: #f0f5fa;
+  --accent: #0097a7;
+  --accent2: #00838f;
+  --accent-glow: rgba(0, 151, 167, 0.1);
+  --bg-panel: rgba(0, 151, 167, 0.06);
+  --bg-panel-hover: rgba(0, 151, 167, 0.12);
+  --text-primary: #0a1628;
+  --text-secondary: #3a5a70;
+  --text-muted: #6a8a9a;
+  --border-color: rgba(0, 151, 167, 0.15);
+  --card-front-bg1: #5a8aaa;
+  --card-front-bg2: #7aaaca;
+  --card-front-border: #4a7a9a;
+  --overlay-bg: rgba(5, 12, 25, 0.88);
+  --panel-bg: rgba(0, 151, 167, 0.04);
+  --star1-bg1: #607a8e; --star1-bg2: #7a94a8; --star1-border: #5a7a8e;
+  --star2-bg1: #5a6abe; --star2-bg2: #7a8ade; --star2-border: #4a5aae;
+  --banner-bg1: #1a5a80; --banner-bg2: #2a7aa0;
+  --exchange-bg1: #1a5a80; --exchange-bg2: #2a7aa0;
+}

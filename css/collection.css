@@ -1,0 +1,92 @@
+/* === Collection === */
+.collection-header { margin-bottom: 16px; }
+.collection-header h2 { font-size: 20px; margin-bottom: 8px; color: var(--text-primary); }
+
+.collection-stats { margin-bottom: 12px; }
+.comp-rate { font-size: 14px; color: var(--star3-color); font-weight: 700; }
+
+.collection-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.filter-btn {
+  padding: 6px 14px; border: none; border-radius: 6px;
+  background: var(--bg-panel); color: var(--text-secondary);
+  font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #006064, #00838f); color: #fff;
+}
+
+.collection-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.collection-card {
+  background: var(--bg-panel); border-radius: 10px;
+  padding: 10px; text-align: center; cursor: pointer;
+  transition: all 0.2s; position: relative; border: 2px solid transparent;
+}
+
+.collection-card:hover { transform: translateY(-2px); }
+.collection-card.owned.star3 { border-color: rgba(255, 215, 0, 0.5); }
+.collection-card.owned.star2 { border-color: rgba(170, 170, 221, 0.4); }
+.collection-card.owned.star1 { border-color: rgba(100, 100, 130, 0.3); }
+
+.collection-card.unowned { opacity: 0.45; filter: grayscale(0.8) brightness(0.6); }
+.collection-card.unowned .col-name { color: var(--text-muted); }
+.collection-card.unowned .col-img { opacity: 0.5; }
+
+/* === Collection Image === */
+.col-img { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; margin: 0 auto 4px; border: 2px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); }
+.col-img img { width: 100%; height: 100%; object-fit: cover; }
+.collection-card.star3 .col-img { border-color: rgba(255,215,0,0.5); }
+.collection-card.star2 .col-img { border-color: rgba(170,170,221,0.4); }
+
+.col-flag { font-size: 20px; }
+.col-stars { font-size: 10px; margin-bottom: 2px; }
+.col-name { font-size: 11px; font-weight: 700; line-height: 1.2; margin-bottom: 2px; }
+.col-pos { font-size: 9px; display: inline-block; padding: 1px 6px; border-radius: 3px; color: #fff; }
+.col-pos.FW { background: #c0392b; } .col-pos.MF { background: #27ae60; }
+.col-pos.DF { background: #2980b9; } .col-pos.GK { background: #f39c12; }
+.col-dupe { font-size: 9px; color: #ffa; margin-top: 2px; }
+.collection-card .dupe-dots { margin-top: 4px; }
+.collection-card .dupe-dot { width: 5px; height: 5px; }
+.collection-card .dupe-label { font-size: 7px; }
+
+/* === History === */
+.history-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin-bottom: 12px;
+}
+
+.stat-box {
+  background: var(--bg-panel); border-radius: 8px;
+  padding: 10px; text-align: center;
+}
+
+.stat-box .label { font-size: 11px; color: var(--text-muted); }
+.stat-box .value { font-size: 18px; font-weight: 700; }
+.stat-box.star3-stat .value { color: var(--star3-color); }
+.stat-box.star2-stat .value { color: var(--star2-color); }
+.stat-box.star1-stat .value { color: var(--star1-color); }
+
+.history-list { max-height: 300px; overflow-y: auto; }
+
+.history-entry {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px; border-radius: 6px; font-size: 12px; margin-bottom: 4px;
+}
+
+.history-entry.star3 { background: rgba(255, 215, 0, 0.1); }
+.history-entry.star2 { background: rgba(170, 170, 221, 0.1); }
+.history-entry.star1 { background: rgba(100, 100, 130, 0.1); }
+.history-entry .stars { font-size: 10px; min-width: 36px; }
+.history-entry .name { flex: 1; font-weight: 600; }
+.history-entry .pull-num { color: var(--text-muted); font-size: 11px; }
+
+/* === Rates Table === */
+.rates-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.rates-table th, .rates-table td { padding: 8px; text-align: left; border-bottom: 1px solid var(--border-color); }
+.rates-table th { color: var(--text-muted); font-weight: 600; }

@@ -29,13 +29,6 @@ function getFlag(country) {
   return COUNTRY_FLAGS[country] || "\u{1F3F3}\u{FE0F}";
 }
 
-const POLICY_NAMES = {
-  possession: "ポゼッション",
-  counter: "カウンター",
-  reaction: "リアクション",
-  moving: "ムービング"
-};
-
 function getPosGroup(pos) {
   if (["CF", "LW", "RW"].includes(pos)) return "FW";
   if (["AM", "LM", "RM", "DM"].includes(pos)) return "MF";

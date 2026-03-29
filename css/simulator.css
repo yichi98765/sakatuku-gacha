@@ -1,0 +1,113 @@
+/* === Simulator === */
+.sim-header { margin-bottom: 16px; }
+.sim-header h2 { font-size: 20px; margin-bottom: 4px; }
+.sim-desc { font-size: 13px; color: var(--text-secondary); }
+
+.sim-controls {
+  background: var(--panel-bg); border-radius: 12px;
+  padding: 16px; margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.sim-section-label {
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;
+}
+
+.sim-preset-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+}
+
+.sim-preset-card {
+  border: 1px solid var(--border-color); border-radius: 10px;
+  background: var(--bg-panel); color: var(--text-primary);
+  padding: 14px 10px; cursor: pointer; font-family: inherit;
+  transition: all 0.2s; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.sim-preset-card:hover {
+  border-color: var(--accent);
+  background: rgba(0, 229, 255, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 229, 255, 0.15);
+}
+.sim-preset-card.featured {
+  border-color: rgba(0, 229, 255, 0.3);
+  background: rgba(0, 229, 255, 0.06);
+}
+.sim-preset-num { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1; }
+.sim-preset-unit { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+.sim-preset-cost { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+.sim-custom-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.sim-custom-row input {
+  flex: 1; padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-panel); color: var(--text-primary);
+  font-size: 16px; font-family: inherit;
+}
+.sim-custom-unit { font-size: 14px; color: var(--text-secondary); font-weight: 600; }
+
+.btn-sim-run {
+  padding: 10px 24px; background: linear-gradient(135deg, #00838f, #00acc1);
+  color: #fff; font-size: 14px; font-weight: 700;
+  white-space: nowrap; border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.sim-results {
+  background: var(--panel-bg); border-radius: 12px; padding: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.sim-results h3 { font-size: 16px; margin-bottom: 12px; color: var(--text-primary); }
+
+.sim-summary {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin-bottom: 16px;
+}
+
+.sim-stat {
+  background: var(--bg-panel); border-radius: 8px; padding: 12px; text-align: center;
+}
+
+.sim-stat .label { font-size: 11px; color: var(--text-muted); }
+.sim-stat .value { font-size: 20px; font-weight: 700; }
+.sim-stat .sub { font-size: 11px; color: var(--text-muted); }
+.sim-stat.star3 .value { color: var(--star3-color); }
+.sim-stat.star2 .value { color: var(--star2-color); }
+.sim-stat.star1 .value { color: var(--star1-color); }
+
+/* Bar chart */
+.sim-bar-container { margin-bottom: 16px; }
+.sim-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.sim-bar-label { font-size: 12px; min-width: 50px; text-align: right; color: var(--text-secondary); }
+.sim-bar-track { flex: 1; height: 20px; background: var(--bg-panel); border-radius: 4px; overflow: hidden; position: relative; }
+.sim-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font-size: 10px; color: #fff; font-weight: 600; }
+.sim-bar-fill.star3 { background: linear-gradient(90deg, #b8860b, var(--star3-color)); }
+.sim-bar-fill.star2 { background: linear-gradient(90deg, #5c6bc0, #9fa8da); }
+.sim-bar-fill.star1 { background: linear-gradient(90deg, #546e7a, #78909c); }
+.sim-bar-expected { font-size: 11px; min-width: 60px; color: var(--text-muted); }
+
+.sim-detail { font-size: 12px; color: var(--text-secondary); }
+
+/* Rarity sections */
+.sim-rarity-section { margin-bottom: 20px; }
+.sim-rarity-title { font-size: 14px; margin-bottom: 8px; padding: 8px 12px; border-radius: 8px; }
+.sim-rarity-title.star3 { color: var(--star3-color); background: rgba(255,215,0,0.1); }
+.sim-rarity-title.star2 { color: var(--star2-color); background: rgba(170,170,221,0.1); }
+.sim-rarity-title.star1 { color: var(--star1-color); background: rgba(136,136,170,0.1); }
+
+.sim-player-table { width: 100%; border-collapse: collapse; }
+.sim-player-table th, .sim-player-table td { padding: 5px 6px; text-align: left; border-bottom: 1px solid var(--border-color); }
+.sim-player-table th { color: var(--text-muted); font-weight: 600; font-size: 11px; }
+.sim-player-table tr.sim-zero { opacity: 0.35; }
+.sim-player-table td:nth-child(4) { text-align: right; }
+.sim-player-table td:nth-child(5) { text-align: right; font-size: 11px; color: var(--text-muted); }
+
+/* Mini distribution bar */
+.sim-mini-bar { height: 8px; background: var(--bg-panel); border-radius: 4px; overflow: hidden; }
+.sim-mini-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+.sim-mini-fill.star3 { background: linear-gradient(90deg, #b8860b, var(--star3-color)); }
+.sim-mini-fill.star2 { background: linear-gradient(90deg, #5c6bc0, #9fa8da); }
+.sim-mini-fill.star1 { background: linear-gradient(90deg, #546e7a, #78909c); }
