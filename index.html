@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サカつく2026 ガチャシミュレーター</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="title">サカつく2026</h1>
+      <p class="subtitle">ガチャシミュレーター</p>
+      <div class="header-controls">
+        <button class="icon-btn" id="btn-sound" onclick="toggleSound()" title="サウンドON/OFF">🔊</button>
+        <button class="icon-btn" id="btn-theme" onclick="toggleTheme()" title="テーマ切替">🌙</button>
+      </div>
+    </header>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-item">
+        <span class="status-label">GB</span>
+        <span class="status-value" id="gb-count">50000</span>
+        <button class="charge-btn" onclick="openCharge()">+</button>
+      </div>
+      <div class="status-item">
+        <span class="status-label">メダル</span>
+        <span class="status-value" id="medal-count">0</span>
+        <span class="status-sub">/ 200</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">総ガチャ回数</span>
+        <span class="status-value" id="total-pulls">0</span>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="main-tabs">
+      <button class="main-tab active" data-page="gacha" onclick="switchPage('gacha')">ガチャ</button>
+      <button class="main-tab" data-page="collection" onclick="switchPage('collection')">図鑑</button>
+      <button class="main-tab" data-page="simulator" onclick="switchPage('simulator')">確率検証</button>
+    </div>
+
+    <!-- Gacha Page -->
+    <div class="page" id="page-gacha">
+      <!-- Banner Select -->
+      <div class="banner-section">
+        <div class="banner-display">
+          <div class="banner-card" id="banner-card">
+            <div class="banner-info">
+              <h2 id="banner-title">SP選手スカウト</h2>
+              <p id="banner-desc">★3 SP選手を獲得しよう！</p>
+            </div>
+            <div class="banner-rates" id="banner-rates">
+              <span>★3: 5.000% / ★2: 10.000% / ★1: 85.000%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pull Buttons -->
+      <div class="pull-buttons">
+        <button class="btn btn-single" id="btn-single" onclick="doPull(1)">
+          <span class="btn-label">1連スカウト</span>
+          <span class="btn-cost">300 GB</span>
+        </button>
+        <button class="btn btn-multi" id="btn-multi" onclick="doPull(10)">
+          <span class="btn-label">10連スカウト</span>
+          <span class="btn-cost">3,000 GB</span>
+          <span class="btn-bonus">★2以上1枚確定</span>
+        </button>
+      </div>
+
+      <!-- Medal Exchange -->
+      <div class="medal-section">
+        <button class="btn btn-exchange" id="btn-exchange" onclick="openExchange()">
+          メダル交換所 (<span id="medal-exchange-count">0</span>/200)
+        </button>
+        <button class="btn btn-reset" onclick="resetAll()">リセット</button>
+      </div>
+
+      <!-- History -->
+      <div class="section-panel">
+        <h3 class="section-title" onclick="toggleSection('history')">
+          ガチャ履歴 <span id="history-toggle">▼</span>
+        </h3>
+        <div class="section-content" id="history-content" style="display:none;">
+          <div class="history-stats" id="history-stats"></div>
+          <div class="history-list" id="history-list"></div>
+        </div>
+      </div>
+
+      <!-- Rates Detail -->
+      <div class="section-panel">
+        <h3 class="section-title" onclick="toggleSection('rates')">
+          提供割合 <span id="rates-toggle">▼</span>
+        </h3>
+        <div class="section-content" id="rates-content" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- Collection Page -->
+    <div class="page" id="page-collection" style="display:none;">
+      <div class="collection-header">
+        <h2>選手図鑑</h2>
+        <div class="collection-stats">
+          <span class="comp-rate" id="comp-rate">0 / 0 (0%)</span>
+        </div>
+        <div class="collection-filters">
+          <button class="filter-btn active" data-filter="all" onclick="filterCollection('all')">全て</button>
+          <button class="filter-btn" data-filter="star3" onclick="filterCollection('star3')">★3</button>
+          <button class="filter-btn" data-filter="star2" onclick="filterCollection('star2')">★2</button>
+          <button class="filter-btn" data-filter="star1" onclick="filterCollection('star1')">★1</button>
+          <button class="filter-btn" data-filter="owned" onclick="filterCollection('owned')">所持</button>
+          <button class="filter-btn" data-filter="unowned" onclick="filterCollection('unowned')">未所持</button>
+        </div>
+      </div>
+      <div class="collection-grid" id="collection-grid"></div>
+    </div>
+
+    <!-- Simulator Page -->
+    <div class="page" id="page-simulator" style="display:none;">
+      <div class="sim-header">
+        <h2>確率検証モード</h2>
+        <p class="sim-desc">大量のガチャを一括シミュレーションして期待値と実測値を比較</p>
+      </div>
+      <div class="sim-controls">
+        <input type="hidden" id="sim-banner" value="normal">
+        <div class="sim-row">
+          <label>回数:</label>
+          <div class="sim-presets">
+            <button class="sim-preset" onclick="runSimulation(100)">100連</button>
+            <button class="sim-preset" onclick="runSimulation(1000)">1,000連</button>
+            <button class="sim-preset" onclick="runSimulation(10000)">10,000連</button>
+            <button class="sim-preset" onclick="runSimulation(100000)">100,000連</button>
+          </div>
+        </div>
+        <div class="sim-row">
+          <label>カスタム:</label>
+          <input type="number" id="sim-custom-count" value="5000" min="1" max="1000000">
+          <button class="btn btn-sim-run" onclick="runSimulation(parseInt(document.getElementById('sim-custom-count').value))">実行</button>
+        </div>
+      </div>
+      <div class="sim-results" id="sim-results" style="display:none;">
+        <h3>シミュレーション結果</h3>
+        <div class="sim-summary" id="sim-summary"></div>
+        <div class="sim-chart" id="sim-chart"></div>
+        <div class="sim-detail" id="sim-detail"></div>
+      </div>
+    </div>
+
+    <!-- Result Overlay -->
+    <div class="overlay" id="overlay" style="display:none;">
+      <!-- Star3 door animation -->
+      <div class="door-animation" id="door-animation" style="display:none;">
+        <div class="door-left"></div>
+        <div class="door-right"></div>
+        <div class="door-light"></div>
+      </div>
+      <div class="result-container" id="result-container">
+        <div class="result-header">
+          <h2 id="result-title">スカウト結果</h2>
+          <button class="btn btn-skip" id="btn-skip" onclick="skipAnimation()">スキップ</button>
+        </div>
+        <div class="cards-container" id="cards-container"></div>
+        <div class="result-buttons">
+          <button class="btn btn-close" id="btn-close-result" onclick="closeResult()" style="display:none;">閉じる</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Medal Exchange Overlay -->
+    <div class="overlay" id="exchange-overlay" style="display:none;">
+      <div class="exchange-container">
+        <h2>メダル交換所</h2>
+        <p class="exchange-info">メダル200枚で★3選手と交換できます</p>
+        <p class="exchange-medals">現在のメダル: <strong id="exchange-medal-display">0</strong> / 200</p>
+        <div class="exchange-players" id="exchange-players"></div>
+        <button class="btn btn-close" onclick="closeExchange()">閉じる</button>
+      </div>
+    </div>
+
+    <!-- Charge Overlay -->
+    <div class="overlay" id="charge-overlay" style="display:none;">
+      <div class="charge-container">
+        <h2>GB チャージ</h2>
+        <p class="charge-desc">シミュレーション用のGBをチャージします</p>
+        <div class="charge-options">
+          <button class="btn btn-charge-opt" onclick="chargeGB(3000)">3,000 GB<span class="charge-price">¥2,728</span></button>
+          <button class="btn btn-charge-opt" onclick="chargeGB(5000)">5,000 GB<span class="charge-price">¥4,546</span></button>
+          <button class="btn btn-charge-opt popular" onclick="chargeGB(10000)">10,000 GB<span class="charge-price">¥9,091</span><span class="charge-badge">人気</span></button>
+          <button class="btn btn-charge-opt" onclick="chargeGB(30000)">30,000 GB<span class="charge-price">¥27,273</span></button>
+          <button class="btn btn-charge-opt" onclick="chargeGB(50000)">50,000 GB<span class="charge-price">¥45,455</span></button>
+          <button class="btn btn-charge-opt" onclick="chargeGB(160000)">160,000 GB<span class="charge-price">¥145,455</span></button>
+        </div>
+        <p class="charge-rate">※ 1円 = 1.1 GB</p>
+        <p class="charge-note">※ 実際の課金は発生しません</p>
+        <button class="btn btn-close" onclick="closeCharge()">閉じる</button>
+      </div>
+    </div>
+
+    <!-- Player Detail Overlay -->
+    <div class="overlay" id="player-detail-overlay" style="display:none;">
+      <div class="player-detail-container" id="player-detail-container"></div>
+    </div>
+  </div>
+
+  <script src="players.js"></script>
+  <script src="player_images.js"></script>
+  <script src="sound.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
