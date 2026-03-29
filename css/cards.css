@@ -71,7 +71,8 @@
   filter: brightness(0.85);
 }
 .card-back.star3 .card-info-overlay,
-.card-back.star2 .card-info-overlay {
+.card-back.star2 .card-info-overlay,
+.card-back.star1 .card-info-overlay {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
   width: 100%; height: 100%; padding: 4px 4px 8px;
@@ -84,10 +85,15 @@
 .card-back.star2 .card-info-overlay .card-stars,
 .card-back.star2 .card-info-overlay .card-name,
 .card-back.star2 .card-info-overlay .card-country,
-.card-back.star2 .card-info-overlay .card-position {
+.card-back.star2 .card-info-overlay .card-position,
+.card-back.star1 .card-info-overlay .card-stars,
+.card-back.star1 .card-info-overlay .card-name,
+.card-back.star1 .card-info-overlay .card-country,
+.card-back.star1 .card-info-overlay .card-position {
   text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.5);
 }
 .card-back.star2 { padding: 0; }
+.card-back.star1 { padding: 0; }
 
 .card-flag { font-size: 18px; margin-bottom: 2px; }
 .card-stars { font-size: 14px; margin-bottom: 2px; filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.5)); }

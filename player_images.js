@@ -108,4 +108,9 @@ const PLAYER_IMAGES = {
   "伊藤涼太郎": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Ryotaro_Ito_2024_%28cropped%29.jpg/250px-Ryotaro_Ito_2024_%28cropped%29.jpg",
   "コブ・コルバニ": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Kobe_Corbanie.jpeg/250px-Kobe_Corbanie.jpeg",
   "アントワーヌ・メンディ": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Mendy_asse_ogcn_2425.png/250px-Mendy_asse_ogcn_2425.png",
+  "モモドゥ・ソンコ": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Momodou_Sonko_%28H%C3%A4cken_vs_Qaraba%C4%9F%2C_UEFA_Europa_League%2C_5_October_2023%29.jpg/250px-Momodou_Sonko_%28H%C3%A4cken_vs_Qaraba%C4%9F%2C_UEFA_Europa_League%2C_5_October_2023%29.jpg",
+  "ヨルフ・スフレーダース": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Jorg_schreuders-1739795306.jpg/250px-Jorg_schreuders-1739795306.jpg",
+  "マティス・サモワーズ": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Matisse_samoise-1602942173.jpg/250px-Matisse_samoise-1602942173.jpg",
+  "ニコラス・サットルベルガー": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/FC_RB_Salzburg_gegen_SK_Rapid_Wien_%28Nikolas_Sattlberger%29_17_%28cropped%29.jpg/250px-FC_RB_Salzburg_gegen_SK_Rapid_Wien_%28Nikolas_Sattlberger%29_17_%28cropped%29.jpg",
+  "イェフ・ハルデフェルト": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Jeff_Hardeveld.jpg/250px-Jeff_Hardeveld.jpg",
 };
