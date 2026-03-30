@@ -9,7 +9,7 @@ function openExchange() {
 
   container.innerHTML = "";
   PLAYERS.star3.forEach(player => {
-    const canExchange = state.medals >= 1000;
+    const canExchange = state.medals >= 200;
     const flag = getFlag(player.country);
     const imgHtml = getPlayerImageHtml(player.name, flag, "exchange");
     const div = document.createElement("div");
@@ -22,7 +22,7 @@ function openExchange() {
       </div>
       <button class="btn btn-exchange-get" ${canExchange ? '' : 'disabled'}
         onclick="exchangePlayer('${player.name.replace(/'/g, "\\'")}')">
-        交換 (1000枚)
+        交換 (200枚)
       </button>
     `;
     container.appendChild(div);
@@ -32,11 +32,11 @@ function openExchange() {
 }
 
 function exchangePlayer(playerName) {
-  if (state.medals < 1000) return;
+  if (state.medals < 200) return;
   const player = PLAYERS.star3.find(p => p.name === playerName);
   if (!player) return;
 
-  state.medals -= 1000;
+  state.medals -= 200;
   const dupeKey = player.name;
   const prevDupes = state.dupes[dupeKey] || 0;
   state.dupes[dupeKey] = prevDupes + 1;

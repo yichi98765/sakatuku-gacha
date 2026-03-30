@@ -93,7 +93,7 @@ function renderRates() {
   html += `
     <div style="margin-top:12px; font-size:11px; color:var(--text-muted);">
       ※ 10連スカウトでは\u2605 2以上のSP選手が最低1枚確定<br>
-      ※ メダルは1回のスカウトにつき1枚獲得（最大1000枚）<br>
+      ※ メダルは1回のスカウトにつき1枚獲得（最大1000枚）/ 200枚で★3選手1名と交換<br>
       ※ 排出率はゲーム内「提供割合 一覧」からの転記データです
     </div>`;
 
