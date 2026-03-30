@@ -28,7 +28,7 @@ function openExchange() {
     container.appendChild(div);
   });
 
-  overlay.style.display = "flex";
+  openOverlay(overlay);
 }
 
 function exchangePlayer(playerName) {
@@ -57,5 +57,5 @@ function exchangePlayer(playerName) {
 }
 
 function closeExchange() {
-  document.getElementById("exchange-overlay").style.display = "none";
+  closeOverlay(document.getElementById("exchange-overlay"));
 }

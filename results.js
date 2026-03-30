@@ -47,7 +47,7 @@ function showResults(results) {
     const managerSvg = cinematic.querySelector(".manager-figure");
     if (managerSvg) { managerSvg.style.animation = "none"; managerSvg.offsetHeight; managerSvg.style.animation = ""; }
 
-    overlay.style.display = "flex";
+    openOverlay(overlay);
     soundManager.star3Flash();
 
     const t1 = setTimeout(() => { soundManager.star3Reveal(); }, 1200);
@@ -64,7 +64,7 @@ function showResults(results) {
     animationTimeouts.push(t3);
   } else {
     cinematic.style.display = "none";
-    overlay.style.display = "flex";
+    openOverlay(overlay);
     buildCards(results, container, hasStar3);
   }
 }
@@ -190,7 +190,7 @@ function showStar3Effect() {
 }
 
 function closeResult() {
-  document.getElementById("overlay").style.display = "none";
+  closeOverlay(document.getElementById("overlay"));
   animationTimeouts.forEach(t => clearTimeout(t));
   animationTimeouts = [];
   isAnimating = false;

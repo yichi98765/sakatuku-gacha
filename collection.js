@@ -102,9 +102,9 @@ function showPlayerDetail(name, rarity) {
     <button class="btn btn-close" onclick="closePlayerDetail()">閉じる</button>
   `;
 
-  document.getElementById("player-detail-overlay").style.display = "flex";
+  openOverlay(document.getElementById("player-detail-overlay"));
 }
 
 function closePlayerDetail() {
-  document.getElementById("player-detail-overlay").style.display = "none";
+  closeOverlay(document.getElementById("player-detail-overlay"));
 }

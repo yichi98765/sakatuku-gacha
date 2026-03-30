@@ -1,5 +1,19 @@
 // === Shared Utilities ===
 
+// --- Overlay open/close helpers (hides footer when overlay is open) ---
+function openOverlay(el) {
+  el.style.display = "flex";
+  document.body.classList.add("overlay-open");
+}
+function closeOverlay(el) {
+  el.style.display = "none";
+  // Only remove class if no other overlays are visible
+  const anyOpen = document.querySelectorAll('.overlay[style*="flex"]');
+  if (anyOpen.length === 0) {
+    document.body.classList.remove("overlay-open");
+  }
+}
+
 // --- Player image HTML helper (eliminates 5x duplication) ---
 function getPlayerImageHtml(playerName, flag, size = "card") {
   const imgUrl = (typeof PLAYER_IMAGES !== 'undefined') ? PLAYER_IMAGES[playerName] : null;

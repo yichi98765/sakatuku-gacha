@@ -56,11 +56,11 @@ function updateBannerDisplay() {
 function openCharge() {
   soundManager.init();
   soundManager.click();
-  document.getElementById("charge-overlay").style.display = "flex";
+  openOverlay(document.getElementById("charge-overlay"));
 }
 
 function closeCharge() {
-  document.getElementById("charge-overlay").style.display = "none";
+  closeOverlay(document.getElementById("charge-overlay"));
 }
 
 function chargeGB(amount) {
@@ -109,13 +109,13 @@ function showConfirm(title, bodyHtml, icon = "\u{1F4CA}") {
     document.getElementById("confirm-icon").textContent = icon;
     document.getElementById("confirm-title").textContent = title;
     document.getElementById("confirm-body").innerHTML = bodyHtml;
-    overlay.style.display = "flex";
+    openOverlay(overlay);
 
     const okBtn = document.getElementById("confirm-ok");
     const cancelBtn = document.getElementById("confirm-cancel");
 
     function cleanup() {
-      overlay.style.display = "none";
+      closeOverlay(overlay);
       okBtn.removeEventListener("click", onOk);
       cancelBtn.removeEventListener("click", onCancel);
     }

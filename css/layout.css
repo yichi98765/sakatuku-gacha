@@ -299,7 +299,11 @@
   text-align: center;
   border-top: 1px solid var(--border-color);
   position: relative;
-  z-index: 1;
+  z-index: 0;
+}
+/* Hide footer when any overlay is visible */
+body.overlay-open .disclaimer-footer {
+  display: none;
 }
 .disclaimer-footer p {
   font-size: 10px;
