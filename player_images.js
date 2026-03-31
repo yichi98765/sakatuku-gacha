@@ -113,4 +113,8 @@ const PLAYER_IMAGES = {
   "マティス・サモワーズ": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Matisse_samoise-1602942173.jpg/250px-Matisse_samoise-1602942173.jpg",
   "ニコラス・サットルベルガー": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/FC_RB_Salzburg_gegen_SK_Rapid_Wien_%28Nikolas_Sattlberger%29_17_%28cropped%29.jpg/250px-FC_RB_Salzburg_gegen_SK_Rapid_Wien_%28Nikolas_Sattlberger%29_17_%28cropped%29.jpg",
   "イェフ・ハルデフェルト": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Jeff_Hardeveld.jpg/250px-Jeff_Hardeveld.jpg",
+  "アレクサンダー・セルロート": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Alexander_S%C3%B8rloth_%28cropped%29.JPG/250px-Alexander_S%C3%B8rloth_%28cropped%29.JPG",
+  "ニコロー・バレッラ": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/20210609_AUT-ITA_Nicol%C3%B2_Barella_850_6517.jpg/250px-20210609_AUT-ITA_Nicol%C3%B2_Barella_850_6517.jpg",
+  "ベン・ホワイト": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Premier_League_Newcastle-Arsenal_2023-05-07_23_%28cropped_Ben_White%29.jpg/250px-Premier_League_Newcastle-Arsenal_2023-05-07_23_%28cropped_Ben_White%29.jpg",
+  "ティボ・クルトワ": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Courtois_celebrating_bronze_%28cropped%29.jpg/250px-Courtois_celebrating_bronze_%28cropped%29.jpg",
 };

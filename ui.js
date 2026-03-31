@@ -39,17 +39,49 @@ function switchPage(page) {
 
 // --- Banner ---
 function initBannerTabs() {
-  state.banner = "normal";
+  if (!GACHA_CONFIG[state.banner]) state.banner = "normal";
   updateBannerDisplay();
+}
+
+function switchBanner(bannerKey) {
+  soundManager.init();
+  soundManager.click();
+  state.banner = bannerKey;
+  document.querySelectorAll(".banner-tab").forEach(t => t.classList.remove("active"));
+  document.querySelector(`.banner-tab[data-banner="${bannerKey}"]`).classList.add("active");
+  updateBannerDisplay();
+  renderRates();
+  saveState();
 }
 
 function updateBannerDisplay() {
   const config = GACHA_CONFIG[state.banner];
+  const isPickup = state.banner === "pickup";
   document.getElementById("banner-title").textContent = config.title;
   document.getElementById("banner-desc").textContent = config.desc;
+  document.getElementById("banner-badge").textContent = isPickup ? "PICK UP" : "SP SCOUT";
+  document.getElementById("banner-card").classList.toggle("pickup", isPickup);
+
+  // ピックアップ選手リスト表示
+  const pickupList = document.getElementById("banner-pickup-list");
+  if (isPickup && typeof PICKUP_STAR3 !== "undefined") {
+    pickupList.style.display = "block";
+    pickupList.innerHTML = PICKUP_STAR3.map(p => {
+      const flag = getFlag(p.country);
+      return `<span class="pickup-player">${flag} ${p.name} <small>(${p.position})</small></span>`;
+    }).join("");
+  } else {
+    pickupList.style.display = "none";
+  }
+
   const r = config.rates;
-  document.getElementById("banner-rates").innerHTML =
-    `<span>\u2605 3: ${r.star3}.000% / \u2605 2: ${r.star2}.000% / \u2605 1: ${r.star1}.000%</span>`;
+  if (isPickup) {
+    document.getElementById("banner-rates").innerHTML =
+      `<span>\u2605 3: ${r.star3.toFixed(3)}% (PU: ${config.pickupRate.toFixed(3)}%) / \u2605 2: ${r.star2.toFixed(3)}% / \u2605 1: ${r.star1.toFixed(3)}%</span>`;
+  } else {
+    document.getElementById("banner-rates").innerHTML =
+      `<span>\u2605 3: ${r.star3}.000% / \u2605 2: ${r.star2}.000% / \u2605 1: ${r.star1}.000%</span>`;
+  }
 }
 
 // --- GB Charge ---

@@ -6,6 +6,12 @@ const GACHA_CONFIG = {
     desc: "★3 SP選手を獲得しよう！",
     rates: { star3: 5, star2: 10, star1: 85 },
     pickupRate: 0,
+  },
+  pickup: {
+    title: "ピックアップスカウト",
+    desc: "ピックアップ★3選手 排出率UP！",
+    rates: { star3: 4.972, star2: 9.984, star1: 85.044 },
+    pickupRate: 4.000,  // ピックアップ4名合計
   }
 };
 

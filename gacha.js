@@ -51,6 +51,7 @@ function doPull(count) {
 function pullOne(config, minRarity = 1) {
   const roll = Math.random() * 100;
   let rarity;
+  const isPickup = state.banner === "pickup";
 
   if (minRarity >= 3) {
     rarity = 3;
@@ -62,8 +63,21 @@ function pullOne(config, minRarity = 1) {
     else rarity = 1;
   }
 
-  const pool = rarity === 3 ? PLAYERS.star3 : rarity === 2 ? PLAYERS.star2 : PLAYERS.star1;
-  const player = pool[Math.floor(Math.random() * pool.length)];
+  let player;
+  if (rarity === 3 && isPickup) {
+    // ピックアップ: ★3内でピックアップ枠(4.000%) vs 通常枠(0.972%)を振り分け
+    const star3Roll = Math.random() * config.rates.star3;
+    if (star3Roll < config.pickupRate) {
+      // ピックアップ選手から均等抽選
+      player = PICKUP_STAR3[Math.floor(Math.random() * PICKUP_STAR3.length)];
+    } else {
+      // 通常★3から均等抽選
+      player = PLAYERS.star3[Math.floor(Math.random() * PLAYERS.star3.length)];
+    }
+  } else {
+    const pool = rarity === 3 ? PLAYERS.star3 : rarity === 2 ? PLAYERS.star2 : PLAYERS.star1;
+    player = pool[Math.floor(Math.random() * pool.length)];
+  }
 
   return { rarity, player, isNew: false, dupeCount: 0 };
 }

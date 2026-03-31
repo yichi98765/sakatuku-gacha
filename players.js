@@ -227,15 +227,23 @@ const PLAYERS = {
   ]
 };
 
-// ピックアップ対象（仮: 通常スカウトの目玉選手）
-const PICKUP_PLAYERS = [
-  PLAYERS.star3.find(p => p.name === "クリスティアーノ・ロナウド"),
-  PLAYERS.star3.find(p => p.name === "ケヴィン・デ・ブライネ"),
-  PLAYERS.star3.find(p => p.name === "ブカヨ・サカ"),
+// ピックアップガチャ専用★3選手（通常プールには含まれない）
+const PICKUP_STAR3 = [
+  { name: "アレクサンダー・セルロート", position: "CF", rate: 1.000, country: "ノルウェー" },
+  { name: "ニコロー・バレッラ", position: "DM", rate: 1.000, country: "イタリア" },
+  { name: "ベン・ホワイト", position: "RB", rate: 1.000, country: "イングランド" },
+  { name: "ティボ・クルトワ", position: "GK", rate: 1.000, country: "ベルギー" },
 ];
+
+// ピックアップガチャの★3通常枠（既存★3を排出率0.027%で）
+const PICKUP_STAR3_NORMAL = PLAYERS.star3.map(p => ({ ...p, rate: 0.027 }));
 
 function getAllPlayers() {
   const all = [];
+  // ピックアップ★3を先頭に
+  if (typeof PICKUP_STAR3 !== "undefined") {
+    PICKUP_STAR3.forEach(p => all.push({ ...p, rarity: 3, isPickup: true }));
+  }
   PLAYERS.star3.forEach(p => all.push({ ...p, rarity: 3 }));
   PLAYERS.star2.forEach(p => all.push({ ...p, rarity: 2 }));
   PLAYERS.star1.forEach(p => all.push({ ...p, rarity: 1 }));

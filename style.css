@@ -1,11 +1,11 @@
 /* === サカつく2026 ガチャシミュレーター — Main Stylesheet === */
 /* All styles split into modules under css/ directory */
 
-@import url('css/variables.css?v=9');
-@import url('css/base.css?v=9');
-@import url('css/layout.css?v=9');
-@import url('css/cards.css?v=9');
-@import url('css/overlays.css?v=9');
-@import url('css/cinematic.css?v=9');
-@import url('css/collection.css?v=9');
-@import url('css/simulator.css?v=9');
+@import url('css/variables.css?v=10');
+@import url('css/base.css?v=10');
+@import url('css/layout.css?v=10');
+@import url('css/cards.css?v=10');
+@import url('css/overlays.css?v=10');
+@import url('css/cinematic.css?v=10');
+@import url('css/collection.css?v=10');
+@import url('css/simulator.css?v=10');

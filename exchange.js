@@ -8,7 +8,9 @@ function openExchange() {
   document.getElementById("exchange-medal-display").textContent = state.medals;
 
   container.innerHTML = "";
-  PLAYERS.star3.forEach(player => {
+  // ピックアップ★3 + 通常★3を表示
+  const allStar3 = (typeof PICKUP_STAR3 !== "undefined" ? [...PICKUP_STAR3] : []).concat(PLAYERS.star3);
+  allStar3.forEach(player => {
     const canExchange = state.medals >= 200;
     const flag = getFlag(player.country);
     const imgHtml = getPlayerImageHtml(player.name, flag, "exchange");
@@ -33,7 +35,8 @@ function openExchange() {
 
 function exchangePlayer(playerName) {
   if (state.medals < 200) return;
-  const player = PLAYERS.star3.find(p => p.name === playerName);
+  const allStar3 = (typeof PICKUP_STAR3 !== "undefined" ? [...PICKUP_STAR3] : []).concat(PLAYERS.star3);
+  const player = allStar3.find(p => p.name === playerName);
   if (!player) return;
 
   state.medals -= 200;

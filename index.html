@@ -22,7 +22,7 @@
     gtag('js', new Date());
     gtag('config', 'G-SE2LP6LWW4');
   </script>
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
   <!-- Background geometric patterns -->
@@ -103,15 +103,22 @@
 
     <!-- Gacha Page -->
     <div class="page" id="page-gacha">
-      <!-- Banner Select -->
+      <!-- Banner Select Tabs -->
+      <div class="banner-tabs">
+        <button class="banner-tab active" data-banner="normal" onclick="switchBanner('normal')">通常SP</button>
+        <button class="banner-tab" data-banner="pickup" onclick="switchBanner('pickup')">ピックアップ</button>
+      </div>
+
+      <!-- Banner Display -->
       <div class="banner-section">
         <div class="banner-display">
           <div class="banner-card" id="banner-card">
-            <div class="banner-badge">SP SCOUT</div>
+            <div class="banner-badge" id="banner-badge">SP SCOUT</div>
             <div class="banner-info">
               <h2 id="banner-title">SP選手スカウト</h2>
               <p id="banner-desc">★3 SP選手を獲得しよう！</p>
             </div>
+            <div class="banner-pickup-list" id="banner-pickup-list" style="display:none;"></div>
             <div class="banner-rates" id="banner-rates">
               <span>★3: 5.000% / ★2: 10.000% / ★1: 85.000%</span>
             </div>
@@ -371,21 +378,21 @@
   </footer>
 
   <!-- Data -->
-  <script src="players.js?v=8"></script>
-  <script src="player_images.js?v=9"></script>
+  <script src="players.js?v=10"></script>
+  <script src="player_images.js?v=10"></script>
   <!-- Core -->
-  <script src="utils.js?v=8"></script>
-  <script src="state.js?v=8"></script>
-  <script src="sound.js?v=8"></script>
+  <script src="utils.js?v=10"></script>
+  <script src="state.js?v=10"></script>
+  <script src="sound.js?v=10"></script>
   <!-- UI & Features -->
-  <script src="ui.js?v=8"></script>
-  <script src="results.js?v=8"></script>
-  <script src="gacha.js?v=8"></script>
-  <script src="collection.js?v=8"></script>
-  <script src="exchange.js?v=8"></script>
-  <script src="history.js?v=8"></script>
-  <script src="simulator.js?v=8"></script>
+  <script src="ui.js?v=10"></script>
+  <script src="results.js?v=10"></script>
+  <script src="gacha.js?v=10"></script>
+  <script src="collection.js?v=10"></script>
+  <script src="exchange.js?v=10"></script>
+  <script src="history.js?v=10"></script>
+  <script src="simulator.js?v=10"></script>
   <!-- Entry Point -->
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
